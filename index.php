@@ -62,11 +62,11 @@ if (isset($_SESSION['user_id'])) {
 <body class="bg-light p-4" data-new-gr-c-s-check-loaded="14.1137.0" data-gr-ext-installed="">
     <div class="container text-end">
 
-        <a href="panel.php" class="btn btn-primary">Panel</a>
+        <a href="user_panel.php" class="btn btn-primary">Panel</a>
         <a href='signout.php' class="btn btn-danger">Sign Out</a>
 
     </div>
-    <form id="applicationForm" action="create_table.php" method="POST" class="mb-4">
+    <form id="applicationForm" action="create_table.php" method="POST" class="mb-4" enctype="multipart/form-data">
         <div class="row g-0">
             <div class="col-lg-5 m-auto">
                 <div class="card shadow p-4">
@@ -179,18 +179,24 @@ if (isset($_SESSION['user_id'])) {
                                 <?php endfor; ?>
                             </select>
                         </div>
+                        <div class="col-12 mt-3">
+                            <label class="fw-semibold">File Upload</label>
+                            <input class="form-control" type="file" name="file_upload" accept="application/pdf"
+                                required>
+                            <small class="form-text text-muted">Dosya yükleyiniz.</small>
+                        </div>
                         <div class="col-12 my-4 text-center">
                             <input type="submit" class="btn btn-success-2 px-5 fw-semibold ms-3" name="submit_btn">
                         </div>
+
+
                     </div>
                 </div>
             </div>
             <div class="text-center text-black opacity-8 mt-3">Copyright © İstanbul Nişantaşı Üniversitesi 2023</div>
         </div>
     </form>
-    <?php
 
-    ?>
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

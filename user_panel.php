@@ -26,24 +26,23 @@ if ($conn->connect_error) {
 $userId = $_SESSION['user_id'];
 
 // Query forms associated with the user ID
-$sql = "SELECT * FROM tesvik WHERE user_id = '$userId'";
+$sql = "SELECT *, DATE_FORMAT(reg_date, '%d.%m.%Y') AS formatted_date  FROM tesvik WHERE user_id = '$userId'";
 $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <title>Akademik Teşvik</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
     <nav class="navbar navbar-default container d-flex">
         <div>
@@ -61,40 +60,45 @@ $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             // Output data in a table
             echo "<table id='example' class='table table-striped' style='width:100%'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Akademik Faaliyet Türü</th>
-                    <th>Faaliyet</th>
-                    <th>Kişi</th>
-                    <th>Teşvik Puanı</th>
-                </tr>
-            </thead>";
-            
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Temel Alan</th>
+                <th>Bilimsel Alan</th>
+                <th>Akademik Faaliyet Türü</th>
+                <th>Faaliyet</th>
+                <th>Eser Adı</th>
+                <th>Kişi</th>
+                <th>Teşvik Puanı</th>
+                <th>Başvuru Tarihi</th>
+        
+            </tr>
+        </thead>";
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                    <td>" . $row["id"] . "</td>
-                    <td>" . $row["name"] . "</td>
-                    <td>" . $row["surname"] . "</td>
-                    <td>" . $row["academic_activity_type"] . "</td>
-                    <td>" . $row["activity"] . "</td>
-                    <td>" . $row["persons"] . "</td>
-                    <td>" . $row["incentive_point"] . "</td>
-                </tr>";
+                <td>" . $row["id"] . "</td>
+                <td>" . $row["basic_field"] . "</td>
+                <td>" . $row["scientific_field"] . "</td>
+                <td>" . $row["academic_activity_type"] . "</td>
+                <td>" . $row["activity"] . "</td>
+                <td>" . $row["work_name"] . "</td>
+                <td>" . $row["persons"] . "</td>
+                <td>" . $row["incentive_point"] . "</td>
+                <td>" . $row["formatted_date"] . "</td>
+               
+              </tr>";
             }
-            
             echo "<tfoot></tfoot>";
             echo "</table>";
         } else {
-            echo "No data available";
+            echo "Başvuru kaydınız bulunmamaktadır!";
         }
 
         // Close the database connection
         $conn->close();
         ?>
+
     </div>
 
     <!-- Modal for updating/deleting -->
@@ -109,4 +113,5 @@ $result = $conn->query($sql);
 
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="js/panel.js"></script>
     <script

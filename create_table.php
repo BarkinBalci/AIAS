@@ -210,11 +210,13 @@ if ($table_result->num_rows == 0) {
         academic_activity_type VARCHAR(50),
         activity VARCHAR(100),
         work_name VARCHAR(100),
-        persons DECIMAL(10,2),
+        persons INT(3),
         coefficient DECIMAL(10,2),
         incentive_point DECIMAL(10,2),
         user_id INT(11),
-        reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,file_name VARCHAR(100),
+        file_path VARCHAR(255),
+        file_size INT(11)
     )";
 
     // Execute the query to create table
@@ -256,7 +258,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($conn->query($insert_query) === TRUE) {
             // echo "Data inserted successfully";
-            header("Location: user_panel.php");
+            // File upload handling
+            if (isset($_FILES['file_upload'])) {
+                $file_name = $_FILES['file_upload']['name'];
+                print '' . $file_name . '';
+                $file_temp = $_FILES['file_upload']['tmp_name'];
+                print '' . $file_temp . '';
+                $file_size = $_FILES['file_upload']['size'];
+                print 'size' . $file_size . '';
+
+                if ($file_temp != "") {
+                    $upload_dir = '/Applications/XAMPP/xamppfiles/temp/';
+                    if (move_uploaded_file($file_temp, $upload_dir . $file_name)) {
+                        $file_insert_query = "UPDATE $table_name SET file_name = '$file_name', file_path = '$upload_dir$file_name', file_size = '$file_size' WHERE id = LAST_INSERT_ID()";
+
+                        if ($conn->query($file_insert_query) === TRUE) {
+                            echo "File uploaded and metadata saved to the database successfully.";
+                            header("Location: user_panel.php");
+                        } else {
+                            echo "Error inserting file data: " . $conn->error;
+                        }
+                    } else {
+                        echo "Error uploading file." . print_r(error_get_last(), true);
+                        ;
+                    }
+                }
+            }
+
         } else {
             echo "Error inserting data: " . $conn->error;
         }

@@ -37,7 +37,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch data from the database
-$sql = "SELECT * FROM tesvik"; // Replace 'your_table' with your actual table name
+$sql = "SELECT *, DATE_FORMAT(reg_date, '%d.%m.%Y') AS formatted_date FROM tesvik"; // Extract date only from reg_date column
 $result = $conn->query($sql);
 
 ?>
@@ -53,8 +53,7 @@ $result = $conn->query($sql);
 
 
     <title>Akademik Teşvik</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
     <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -85,33 +84,44 @@ $result = $conn->query($sql);
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Surname</th>
+                <th>Ünvan</th>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Departman</th>
+                <th>Temel Alan</th>
+                <th>Bilimsel Alan</th>
                 <th>Akademik Faaliyet Türü</th>
                 <th>Faaliyet</th>
+                <th>Eser Adı</th>
                 <th>Kişi</th>
                 <th>Teşvik Puanı</th>
+                <th>Başvuru Tarihi</th>
         
-                <!-- Add more columns based on your table structure -->
             </tr>
         </thead>";
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
                 <td>" . $row["id"] . "</td>
+                <td>" . $row["title"] . "</td>
                 <td>" . $row["name"] . "</td>
                 <td>" . $row["surname"] . "</td>
+                <td>" . $row["department"] . "</td>
+                <td>" . $row["basic_field"] . "</td>
+                <td>" . $row["scientific_field"] . "</td>
                 <td>" . $row["academic_activity_type"] . "</td>
                 <td>" . $row["activity"] . "</td>
+                <td>" . $row["work_name"] . "</td>
                 <td>" . $row["persons"] . "</td>
                 <td>" . $row["incentive_point"] . "</td>
-                <!-- Add more columns based on your table structure -->
+                <td>" . $row["formatted_date"] . "</td>
+               
               </tr>";
             }
             echo "<tfoot></tfoot>";
             echo "</table>";
         } else {
-            echo "No data available";
+            echo "Başvuru kaydınız bulunmamaktadır!";
         }
 
         // Close the database connection
@@ -139,10 +149,40 @@ $result = $conn->query($sql);
                     <form id="updateForm">
                         <!-- Input fields to update values -->
                         <input type="hidden" id="rowId">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" class="form-control">
+
                         <label for="name">Name:</label>
                         <input type="text" id="name" class="form-control" required>
-                        <!-- Add more fields as per your table structure -->
-                        <!-- ... -->
+
+                        <label for="surname">Surname:</label>
+                        <input type="text" id="surname" class="form-control" required>
+
+                        <!-- Add input fields for other columns -->
+
+
+                        <label for="department">Department:</label>
+                        <input type="text" id="department" class="form-control">
+
+                        <label for="basic_field">Basic Field:</label>
+                        <input type="text" id="basic_field" class="form-control">
+
+                        <label for="scientific_field">Scientific Field:</label>
+                        <input type="text" id="scientific_field" class="form-control">
+
+                        <label for="academic_activity_type">Academic Activity Type:</label>
+                        <input type="text" id="academic_activity_type" class="form-control">
+
+                        <label for="activity">Activity:</label>
+                        <input type="text" id="activity" class="form-control">
+
+                        <label for="work_name">Work Name:</label>
+                        <input type="text" id="work_name" class="form-control">
+
+                        <label for="persons">Persons:</label>
+                        <input type="text" id="persons" class="form-control">
+
+                        <!-- Add more input fields for other columns -->
 
                         <!-- Buttons to update or delete -->
                         <div class="mt-3">
@@ -151,6 +191,7 @@ $result = $conn->query($sql);
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -164,36 +205,38 @@ $result = $conn->query($sql);
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="js/panel.js"></script>
     <script>
-        // $(document).ready(function () {
-        //     $.ajax({
-        //         url: 'fetch_table.php', // Replace with the script that fetches the table content
-        //         method: 'GET', // Assuming the fetch_table.php returns the HTML table content
-        //         success: function (data) {
-        //             $('#example').html(data); // Update the table content
-        //             $('#updateModal').modal('hide'); // Hide the modal
-        //         },
-        //         error: function (xhr, status, error) {
-        //             console.error(error);
-        //         }
-        //     });
-        // })
+
 
         $('#example tbody').on('click', 'tr', function () {
             // Get the data from the clicked row
             var rowData = $('#example').DataTable().row(this).data();
-            // console.log(rowData);
             if (rowData) {
                 // Populate modal with row data
                 $('#rowId').val(rowData[0]);
-                $('#name').val(rowData[1]);
-                // Populate other fields similarly
-                // Show the modal using Bootstrap 5 modal method
-                // // Show the modal
-                $('.modal').modal({
+                $('#title').val(rowData[1]);
+                $('#name').val(rowData[2]);
+                $('#surname').val(rowData[3]);
+                $('#department').val(rowData[4]);
+                $('#basic_field').val(rowData[5]);
+                $('#scientific_field').val(rowData[6]);
+                $('#academic_activity_type').val(rowData[7]);
+                $('#activity').val(rowData[8]);
+                $('#work_name').val(rowData[9]);
+                $('#persons').val(rowData[10]);
+
+                // Show the modal
+                $('#updateModal').modal({
                     "backdrop": "static",
                     "show": true
                 });
             }
+        });
+
+        $('.btn-close').on('click', function () {
+            // Get the data from the clicked row
+
+            $('#updateModal').modal('hide');
+
         });
 
 
@@ -208,19 +251,10 @@ $result = $conn->query($sql);
                 success: function (response) {
                     // Refresh the page or update the table after deletion
                     // $('#example').html(response); // Update the table content
-                    // $('#updateModal').modal('hide');
-                    // location.reload(); // Reload the page for simplicity, you can update the table via AJAX too
-                    $.ajax({
-                        url: 'fetch_table.php', // Replace with the script that fetches the table content
-                        method: 'GET', // Assuming the fetch_table.php returns the HTML table content
-                        success: function (data) {
-                            $('#example').html(data); // Update the table content
-                            $('#updateModal').modal('hide'); // Hide the modal
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
+                    $('#updateModal').modal('hide');
+                    setTimeout(function () {
+                        location.reload(); // Reload the page for simplicity, you can update the table via AJAX too
+                    }, 500);
                 }, error: function (xhr, status, error) {
                     console.error(error);
                 },
@@ -229,26 +263,49 @@ $result = $conn->query($sql);
 
         // Function to handle form submission for updating data
         $('#updateBtn').on('click', function (event) {
+            event.preventDefault(); // Prevent default form submission
             var rowId = $('#rowId').val();
-            rowName = $("#name").val();
+            var rowName = $("#name").val();
+            var rowSurname = $("#surname").val();
+            var rowTitle = $("#title").val();
+            var rowDepartment = $("#department").val();
+            var rowBasicField = $("#basic_field").val();
+            var rowScientificField = $("#scientific_field").val();
+            var rowAcademicActivityType = $("#academic_activity_type").val();
+            var rowActivity = $("#activity").val();
+            var rowWorkName = $("#work_name").val();
+            var rowPersons = $("#persons").val();
 
-            // var formData = $(this).serialize(); // Get form data
-            // console.log(formData);
-            // Send AJAX request to update the row
             $.ajax({
                 url: 'update_row.php', // Replace with your PHP script to handle update
                 method: 'POST',
-                data: { id: rowId, name: rowName },
+                data: {
+                    id: rowId,
+                    name: rowName,
+                    surname: rowSurname,
+                    title: rowTitle,
+                    department: rowDepartment,
+                    basic_field: rowBasicField,
+                    scientific_field: rowScientificField,
+                    academic_activity_type: rowAcademicActivityType,
+                    activity: rowActivity,
+                    work_name: rowWorkName,
+                    persons: rowPersons
+                    // Add more fields as needed
+                },
                 success: function (response) {
                     // Handle success (e.g., close modal, refresh table)
                     $('#updateModal').modal('hide'); // Hide the modal after update
-                    // location.reload(); // Reload the page or update the table via AJAX
+                    setTimeout(function () {
+                        location.reload(); // Reload the page for simplicity; update the table via AJAX too if needed
+                    }, 1000);
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
                 },
             });
         });
+
     </script>
 </body>
 
