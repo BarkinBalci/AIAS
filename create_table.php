@@ -178,8 +178,8 @@ function calculateIncentivePoint($academic_activity_type, $activity, $coefficien
 session_start();
 // Database connection details
 $servername = "localhost"; // Change this if your database is on a different server
-$username = "root"; // Replace with your MySQL username
-$password = ""; // Replace with your MySQL password
+$username = "fatih"; // Replace with your MySQL username
+$password = "123"; // Replace with your MySQL password
 $dbname = "aias"; // Replace with your database name
 
 // Create connection
@@ -260,28 +260,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($conn->query($insert_query) === TRUE) {
             // echo "Data inserted successfully";
             // Dosya yükleme işlemini yönetmek
-            $file_name = $_FILES['file_upload']['name'];
-            $file_temp = $_FILES['file_upload']['tmp_name'];
-            
-            // Dosya içeriğini okuyun
-            $file_content = file_get_contents($file_temp);
-            
-            // Hazırlanan ifadeyi ve prepared statements kullanarak INSERT sorgusunu çalıştırın
-            $stmt = $conn->prepare('INSERT INTO files (file_name, file_data) VALUES (?, ?)');
-            $stmt->bind_param("sb", $file_name, $file_content);
-            $stmt->send_long_data(1, $file_content);
-            $stmt->execute();
-            
-            // Başarı veya hata durumlarını kontrol edin
-            if ($stmt->affected_rows > 0) {
-                echo "Dosya başarıyla yüklendi ve veritabanına kaydedildi.";
-            } else {
-                echo "Dosya yüklenirken hata oluştu: " . $conn->error;
+            if (isset($_FILES['file_upload'])) {
+
+
+                $file_name = $_FILES['file_upload']['name'];
+                $file_temp = $_FILES['file_upload']['tmp_name'];
+                $file_size = $_FILES['file_upload']['size'];
+
+                if ($file_temp != "") {
+                    $upload_dir = '/Applications/XAMPP/xamppfiles/htdocs/aias/files/';
+                    $project_dir = "/aias/files/";
+                    if (move_uploaded_file($file_temp, $upload_dir . $file_name)) {
+                        // Get the last inserted ID after the data insertion query
+                        $insert_query = "UPDATE $table_name  SET file_name = '$file_name', file_path = '$project_dir$file_name', file_size = '$file_size' WHERE id = LAST_INSERT_ID()";
+
+                        if ($conn->query($insert_query) === TRUE) {
+                            // echo "Data inserted successfully";
+                            header("Location: user_panel.php");
+                        } else {
+                            echo "Error inserting data: " . $conn->error;
+                        }
+                    } else {
+                        echo "Error uploading file" . print_r(error_get_last(), true);
+                    }
+                }
             }
-            
-            // İfadeyi ve bağlantıyı kapatın
-            $stmt->close();
-            $conn->close();
         } else {
             echo "Error inserting data: " . $conn->error;
         }
