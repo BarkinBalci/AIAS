@@ -76,6 +76,27 @@ if (isset($_SESSION['user_id'])) {
                             <p class="h5 opacity-75 mt-4">Akademik Teşvik Başvuru Sistemi</p>
                             <p class="h6 opacity-50">Akademik Teşvik Başvuru Formu</p>
                         </div>
+                        <div class="col-9 mt-4 invisible" >
+                        </div>
+                        <div class="col-3 mt-4 text-right">
+                            <label class="fw-semibold">Başvuru Dönemi</label>
+                            <select class="form-control" name="submission_period">
+                                <option value="">Seçiniz...</option>
+                                <option value="January">Ocak</option>
+                                <option value="February">Şubat</option>
+                                <option value="March">Mart</option>
+                                <option value="April">Nisan</option>
+                                <option value="May">Mayıs</option>
+                                <option value="June">Haziran</option>
+                                <option value="July">Temmuz</option>
+                                <option value="August">Ağustos</option>
+                                <option value="September">Eylül</option>
+                                <option value="October">Ekim</option>
+                                <option value="November">Kasım</option>
+                                <option value="December">Aralık</option>
+                            </select>
+                        </div>
+
 
                         <div class="col-12">
                             <div class="row academicInfo">
@@ -144,7 +165,7 @@ if (isset($_SESSION['user_id'])) {
                             </small>
                         </div>
 
-                        <div class="col-12 mt-3">
+                        <div class="col-12 mt-5">
                             <label class="fw-semibold">Akademik Faaliyet Türü</label>
                             <select class="form-control" name="academic_activity_type"
                                 onchange="updateActivityTypeOptions()">
@@ -179,23 +200,24 @@ if (isset($_SESSION['user_id'])) {
                                 <?php endfor; ?>
                             </select>
                         </div>
+
+
+
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">File Upload</label>
-                            <input class="form-control" type="file" name="file_upload" accept="application/pdf"
-                                required>
+                            <label class="fw-semibold">Dosya Yükleme</label>
+                            <input class="form-control" type="file" name="file_upload" accept="application/pdf" required>
                             <small class="form-text text-muted">Dosya yükleyiniz.</small>
                         </div>
                         <div class="col-12 my-4 text-center">
                             <input type="submit" class="btn btn-success-2 px-5 fw-semibold ms-3" name="submit_btn">
                         </div>
 
-
-                    </div>
-                </div>
-            </div>
-            <div class="text-center text-black opacity-8 mt-3">Copyright © İstanbul Nişantaşı Üniversitesi 2023</div>
-        </div>
-    </form>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="text-center text-black opacity-8 mt-3">Copyright © İstanbul Nişantaşı Üniversitesi 2023</div>
+                        </div>
+                        </form>
 
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
