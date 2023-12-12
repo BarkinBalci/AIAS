@@ -64,6 +64,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 
 <body>
+    
     <a href="coefficient_settings.php">Katsayı Ayarları</a>
     <a href="activity_settings.php">Faaliyet Ayarları</a>
 

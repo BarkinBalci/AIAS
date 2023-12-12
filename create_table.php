@@ -178,8 +178,8 @@ function calculateIncentivePoint($academic_activity_type, $activity, $coefficien
 session_start();
 // Database connection details
 $servername = "localhost"; // Change this if your database is on a different server
-$username = "fatih"; // Replace with your MySQL username
-$password = "123"; // Replace with your MySQL password
+$username = "root"; // Replace with your MySQL username
+$password = ""; // Replace with your MySQL password
 $dbname = "aias"; // Replace with your database name
 
 // Create connection

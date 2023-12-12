@@ -158,7 +158,7 @@ if ($tableExists->num_rows === 0) {
         echo "Error creating table: " . $conn->error;
     }
 } else {
-    echo "Table '$tableName' already exists";
+    //echo "Table '$tableName' already exists";
 }
 
 
@@ -222,14 +222,13 @@ if ($result->num_rows > 0) {
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
-            margin-top: 20px;
+            margin: 0;
             padding: 0;
             box-sizing: border-box;
-            display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
         }
+
 
         h2 {
             text-align: center;
@@ -239,7 +238,7 @@ if ($result->num_rows > 0) {
         }
 
         table {
-            width: 80%;
+            width: 100%;
             margin: 20px auto;
             border-collapse: collapse;
             background-color: #fff;
@@ -254,7 +253,7 @@ if ($result->num_rows > 0) {
         }
 
         th {
-            background-color: #007bff;
+            background-color: #ac103d;
             color: #fff;
         }
 
@@ -270,9 +269,9 @@ if ($result->num_rows > 0) {
 
         button {
             display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #ac103d;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -281,7 +280,7 @@ if ($result->num_rows > 0) {
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #780b2a;
         }
 
         form {
@@ -295,11 +294,47 @@ if ($result->num_rows > 0) {
             margin-bottom: 5px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
 </head>
 
-<body class="container">
-
-
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-kucuk.png" width="180">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="panel.php">Anasayfa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Başvuru Oluştur</a>
+        </li>
+</ul>
+      <ul class="navbar-nav ms-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ayarlar
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="coefficient_settings.php">Katsayı Ayarları</a>
+          <a class="dropdown-item" href="activity_settings.php">Faaliyet Ayarları</a>
+        </div>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link" href="signout.php">Çıkış Yap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container mt-5">
     <h2>Akademik Faaliyetler</h2>
     <form action="" method="post">
         <table>
@@ -334,7 +369,7 @@ if ($result->num_rows > 0) {
                         </td>
                         <td>
                             <button type="submit" name="update_activity[<?php echo $activity['id']; ?>]">
-                                Update
+                                Güncelle
                             </button>
                         </td>
                     </tr>
@@ -343,8 +378,9 @@ if ($result->num_rows > 0) {
         </table>
 
     </form>
+    </div>
+    <div class="container mt-5">
     <form action="" method="post">
-
         <h2>Yeni Faaliyet Ekle</h2>
         <div>
             <label for="new_academic_activity_type">Yeni Akademik Faaliyet Türü:</label>
@@ -357,10 +393,15 @@ if ($result->num_rows > 0) {
             <label for="new_point">Yeni Faaliyet Değeri:</label>
             <input type="text" name="new_point" required>
         </div>
+        <div class="container mt-5 modal-footer justify-content-center">
         <button type="submit" name="add_activity">Faaliyet Ekle</button>
+        </div>
     </form>
+    </div>
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

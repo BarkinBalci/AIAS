@@ -12,8 +12,7 @@ if (isset($_SESSION['user_id'])) {
     $user = null;
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
-        // Display current user information
-        echo "<div class='container d-flex justify-content-between'>" . "Welcome, " . $user['phone'] . "</div>";  // Display whatever user information you want
+        //echo "<div class='container d-flex justify-content-between'>" . "Welcome, " . $user['phone'] . "</div>";  // Display whatever user information you want
     }
 } else {
     // If user is not logged in, you can redirect to the signin page or perform other actions
@@ -55,25 +54,52 @@ $result = $conn->query($sql);
     <title>Akademik Teşvik</title>
 
     <link rel="stylesheet" href="css/main.css">
+
+    <style>
+  .ms-auto {
+    margin-left: auto !important;
+  }
+</style>
 </head>
 
 <body>
-    <nav class="navbar navbar-default container d-flex">
-        <div>
-            <div class="navbar-header">
-                <img src="img/logo-kucuk.png" width="140">
-            </div>
-            <div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-kucuk.png" width="180">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="panel.php">Anasayfa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Başvuru Oluştur</a>
+        </li>
+</ul>
+      <ul class="navbar-nav ms-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ayarlar
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="coefficient_settings.php">Katsayı Ayarları</a>
+          <a class="dropdown-item" href="activity_settings.php">Faaliyet Ayarları</a>
+        </div>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link" href="signout.php">Çıkış Yap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-            </div>
-        </div>
-        <div class="text-end">
-            <a href="index.php" class="btn btn-warning">Yeni Başvuru</a>
-            <a href="settings.php" class="btn btn-primary">Ayarlar</a>
-            <a href='signout.php' class='btn btn-danger'>Çıkış Yap</a>
-        </div>
-    </nav>
-    <div class="container">
+
+    <div class="mt-5 container">
 
 
 

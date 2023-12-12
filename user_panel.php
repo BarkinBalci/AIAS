@@ -44,17 +44,31 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-    <nav class="navbar navbar-default container d-flex">
-        <div>
-            <div class="navbar-header">
-                <img src="img/logo-kucuk.png" width="140">
-            </div>
-        </div>
-        <div class="text-end">
-            <a href="index.php" class="btn btn-warning">Yeni Başvuru</a>
-            <a href='signout.php' class='btn btn-danger'>Çıkış Yap</a>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-kucuk.png" width="180">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="panel.php">Anasayfa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Başvuru Yap</a>
+        </li>
+</ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="signout.php">Çıkış Yap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
     <div class="container">
         <?php
         if ($result->num_rows > 0) {

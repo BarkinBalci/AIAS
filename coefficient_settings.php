@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $conn->query($updateSql);
     }
     // Redirect to settings page to reflect changes
-    header("Location: settings.php");
+    header("Location: panel.php");
     exit();
 }
 ?>
@@ -65,10 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
         h1 {
@@ -77,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         table {
-            width: 50%;
+            width: 30%;
             margin: 20px auto;
             border-collapse: collapse;
             background-color: #fff;
@@ -91,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         th {
-            background-color: #007bff;
+            background-color: #ac103d;
             color: #fff;
         }
 
@@ -107,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             display: block;
             margin: 20px auto;
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #ac103d;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -116,20 +114,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #780b2a;
         }
     </style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
 </head>
 
 <body>
-    <div>
-        <h1>Coefficient Settings</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-kucuk.png" width="180">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="panel.php">Anasayfa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Başvuru Oluştur</a>
+        </li>
+</ul>
+      <ul class="navbar-nav ms-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ayarlar
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="coefficient_settings.php">Katsayı Ayarları</a>
+          <a class="dropdown-item" href="activity_settings.php">Faaliyet Ayarları</a>
+        </div>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link" href="signout.php">Çıkış Yap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    <div class="mt-5 container">
+        <h1>Katsayı Ayarları</h1>
         <form method="post">
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Coefficient Value</th>
+                        <th>Katsayı Değeri</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,9 +180,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <button type="submit">Save Changes</button>
+            
+            <div class="modal-footer justify-content-center">
+            <button type="submit">Kaydet</button>
+            </div>
         </form>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
