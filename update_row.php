@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         isset($_POST['academic_activity_type']) &&
         isset($_POST['activity']) &&
         isset($_POST['work_name']) &&
+        isset($_POST['doi_number']) &&
         isset($_POST['persons'])
         // Ensure all the fields you want to update are included here
     ) {
@@ -42,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $academic_activity_type = $_POST['academic_activity_type'];
         $activity = $_POST['activity'];
         $work_name = $_POST['work_name'];
+        $doi_number = $_POST['doi_number'];
         $persons = $_POST['persons'];
         // Add more fields as necessary
 
@@ -55,7 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 scientific_field = '$scientific_field', 
                 academic_activity_type = '$academic_activity_type', 
                 activity = '$activity', 
-                work_name = '$work_name', 
+                work_name = '$work_name',
+                doi_number = '$doi_number',
                 persons = '$persons' 
                 WHERE id = $id";
 

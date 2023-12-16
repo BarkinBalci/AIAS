@@ -210,6 +210,7 @@ if ($table_result->num_rows == 0) {
         academic_activity_type VARCHAR(50),
         activity VARCHAR(100),
         work_name VARCHAR(100),
+        doi_number VARCHAR(100),
         persons INT(3),
         coefficient DECIMAL(10,2),
         incentive_point DECIMAL(10,2),
@@ -246,6 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $academic_activity_type = $_POST["academic_activity_type"];
         $activity = $_POST["activity"];
         $work_name = $_POST["work_name"];
+        $doi_number = $_POST["doi_number"];
         $persons = $_POST["persons"];
 
         // Katsayısının hesaplanması
@@ -255,7 +257,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $incentive_point = calculateIncentivePoint($academic_activity_type, $activity, $coefficient);
 
         // SQL query to insert data into the table
-        $insert_query = "INSERT INTO $table_name (name, surname, email, title, faculty, department, basic_field, scientific_field, academic_activity_type, activity, work_name, persons, coefficient, user_id, incentive_point ) VALUES ('$name', '$surname', '$email', '$title', '$faculty', '$department', '$basic_field', '$scientific_field', '$academic_activity_type', '$activity', '$work_name', '$persons', '$coefficient', '$userId', '$incentive_point')";
+        $insert_query = "INSERT INTO $table_name (name, surname, email, title, faculty, department, basic_field, scientific_field, academic_activity_type, activity, work_name, doi_number, persons, coefficient, user_id, incentive_point ) VALUES ('$name', '$surname', '$email', '$title', '$faculty', '$department', '$basic_field', '$scientific_field', '$academic_activity_type', '$activity', '$work_name', '$doi_number', '$persons', '$coefficient', '$userId', '$incentive_point')";
 
         if ($conn->query($insert_query) === TRUE) {
             // echo "Data inserted successfully";

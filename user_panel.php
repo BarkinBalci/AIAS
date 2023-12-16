@@ -82,6 +82,7 @@ $result = $conn->query($sql);
                 <th>Akademik Faaliyet Türü</th>
                 <th>Faaliyet</th>
                 <th>Eser Adı</th>
+                <th>Doi Numarası</th>
                 <th>Kişi</th>
                 <th>Teşvik Puanı</th>
                 <th>Başvuru Tarihi</th>
@@ -97,6 +98,7 @@ $result = $conn->query($sql);
                 <td>" . $row["academic_activity_type"] . "</td>
                 <td>" . $row["activity"] . "</td>
                 <td>" . $row["work_name"] . "</td>
+                <td>" . $row["doi_number"] . "</td>
                 <td>" . $row["persons"] . "</td>
                 <td>" . $row["incentive_point"] . "</td>
                 <td>" . $row["formatted_date"] . "</td>

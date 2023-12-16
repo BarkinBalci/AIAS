@@ -255,6 +255,16 @@ if (isset($_SESSION['user_id'])) {
                             <input class="form-control" type="text" name="work_name">
                             </select>
                         </div>
+                        
+                        <div class="col-12 mt-3">
+                        <label class="fw-semibold">
+                                <span>Doi Numarası</span>
+                                <span> / </span>
+                                <span class="opacity-50">Doi Number</span>
+                            </label>
+                            <input class="form-control" type="text" name="doi_number">
+                            </select>
+                        </div>
 
                         <div class="col-12 mt-3">
                         <label class="fw-semibold">

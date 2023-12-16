@@ -169,6 +169,7 @@ function showModal(event) {
     academicActivityType: $('select[name="academic_activity_type"]').val(),
     activityType: $('select[name="activity"]').val(),
     workName: $('input[name="work_name"]').val(),
+    doiNumber: $('input[name="doi_number"]').val(),
   };
 
   var missingFields = checkFields(formData);

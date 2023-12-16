@@ -117,6 +117,7 @@ $result = $conn->query($sql);
                 <th>Akademik Faaliyet Türü</th>
                 <th>Faaliyet</th>
                 <th>Eser Adı</th>
+                <th>Doi Numarası</th>
                 <th>Kişi</th>
                 <th>Teşvik Puanı</th>
                 <th>Başvuru Tarihi</th>
@@ -136,6 +137,7 @@ $result = $conn->query($sql);
                 <td>" . $row["academic_activity_type"] . "</td>
                 <td>" . $row["activity"] . "</td>
                 <td>" . $row["work_name"] . "</td>
+                <td>" . $row["doi_number"] . "</td>
                 <td>" . $row["persons"] . "</td>
                 <td>" . $row["incentive_point"] . "</td>
                 <td>" . $row["formatted_date"] . "</td>
@@ -209,6 +211,10 @@ $result = $conn->query($sql);
                         <label for="work_name">Work Name:</label>
                         <input type="text" id="work_name" class="form-control">
 
+                        <label for="doi_number">Doi Number:</label>
+                        <input type="text" id="doi_number" class="form-control">
+
+
                         <label for="persons">Persons:</label>
                         <input type="text" id="persons" class="form-control">
 
@@ -252,7 +258,8 @@ $result = $conn->query($sql);
                 $('#academic_activity_type').val(rowData[7]);
                 $('#activity').val(rowData[8]);
                 $('#work_name').val(rowData[9]);
-                $('#persons').val(rowData[10]);
+                $('#doi_number').val(rowData[10]);
+                $('#persons').val(rowData[11]);
 
                 // Show the modal
                 $('#updateModal').modal({
@@ -304,6 +311,7 @@ $result = $conn->query($sql);
             var rowAcademicActivityType = $("#academic_activity_type").val();
             var rowActivity = $("#activity").val();
             var rowWorkName = $("#work_name").val();
+            var rowDoiNumber = $("#doi_number").val();
             var rowPersons = $("#persons").val();
 
             $.ajax({
@@ -320,6 +328,7 @@ $result = $conn->query($sql);
                     academic_activity_type: rowAcademicActivityType,
                     activity: rowActivity,
                     work_name: rowWorkName,
+                    doi_number: rowDoiNumber,
                     persons: rowPersons
                     // Add more fields as needed
                 },
