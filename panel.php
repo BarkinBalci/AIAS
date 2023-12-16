@@ -101,8 +101,6 @@ $result = $conn->query($sql);
 
     <div class="mt-5 container">
 
-
-
         <?php
         if ($result->num_rows > 0) {
             // Output data in a table

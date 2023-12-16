@@ -55,7 +55,7 @@ $result = $conn->query($sql);
     <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="panel.php">Anasayfa</a>
+            <a class="nav-link" href="user_panel.php">Anasayfa</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="index.php">Başvuru Yap</a>
@@ -69,7 +69,7 @@ $result = $conn->query($sql);
     </div>
   </div>
 </nav>
-    <div class="container">
+    <div class="mt-5 container">
         <?php
         if ($result->num_rows > 0) {
             // Output data in a table

@@ -13,7 +13,7 @@ if (isset($_SESSION['user_id'])) {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         // Display current user information
-        echo "Welcome, " . $user['phone'];  // Display whatever user information you want
+        //echo "Welcome, " . $user['phone'];  // Display whatever user information you want
     }
 } else {
     // If user is not logged in, you can redirect to the signin page or perform other actions
@@ -59,27 +59,49 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
-<body class="bg-light p-4" data-new-gr-c-s-check-loaded="14.1137.0" data-gr-ext-installed="">
-    <div class="container text-end">
-
-        <a href="user_panel.php" class="btn btn-primary">Panel</a>
-        <a href='signout.php' class="btn btn-danger">Sign Out</a>
-
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="img/logo-kucuk.png" width="180">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="user_panel.php">Anasayfa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="index.php">Başvuru Yap</a>
+        </li>
+</ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="signout.php">Çıkış Yap</a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
     <form id="applicationForm" action="create_table.php" method="POST" class="mb-4" enctype="multipart/form-data">
-        <div class="row g-0">
+        <div class="mt-5 row g-0">
             <div class="col-lg-5 m-auto">
                 <div class="card shadow p-4">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <img src="img/logo-kucuk.png" width="140">
                             <p class="h5 opacity-75 mt-4">Akademik Teşvik Başvuru Sistemi</p>
-                            <p class="h6 opacity-50">Akademik Teşvik Başvuru Formu</p>
+                            <p class="h6 opacity-50">Academic Incentive Application System</p>
                         </div>
-                        <div class="col-9 mt-4 invisible" >
+                        <div class="col-8 mt-4 invisible" >
                         </div>
-                        <div class="col-3 mt-4 text-right">
-                            <label class="fw-semibold">Başvuru Dönemi</label>
+                        <div class="col-4 mt-4 text-right">
+                        <label class="fw-semibold">
+                                    <span>Başvuru Dönemi</span>
+                                    <span> / </span>
+                                    <span class="opacity-50">Application Period</span>
+                                </label>
                             <select class="form-control" name="submission_period">
                                 <option value="">Seçiniz...</option>
                                 <option value="January">Ocak</option>
@@ -101,12 +123,20 @@ if (isset($_SESSION['user_id'])) {
                         <div class="col-12">
                             <div class="row academicInfo">
                                 <div class="col-6 mt-4">
-                                    <label class="fw-semibold">Ad</label>
+                                <label class="fw-semibold">
+                                    <span>Ad</span>
+                                    <span> / </span>
+                                    <span class="opacity-50">Name</span>
+                                </label>
                                     <input class="form-control" type="text" placeholder="Adınızı girin" name="name">
                                 </div>
 
                                 <div class="col-6 mt-4">
-                                    <label class="fw-semibold">Soyad</label>
+                                <label class="fw-semibold">
+                                    <span >Soyad</span>
+                                    <span> / </span>
+                                    <span class="opacity-50">Surname</span>
+                                </label>
                                     <input class="form-control" type="text" placeholder="Soyadınızı girin"
                                         name="surname">
                                 </div>
@@ -114,13 +144,21 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">E-posta</label>
+                        <label class="fw-semibold">
+                                    <span>E-posta</span>
+                                    <span> / </span>
+                                    <span class="opacity-50">E-mail</span>
+                                </label>
                             <input class="form-control" type="email" placeholder="E-posta adresinizi girin"
                                 name="email">
                         </div>
 
                         <div class="col-12 mt-4">
-                            <label class="fw-semibold">Akademik Kadro Ünvanı</label>
+                            <label class="fw-semibold">
+                                <span>Akademik Ünvan</span>
+                                <span> / </span>
+                                <span class="opacity-50">Academic Title</span>
+                            </label>
 
                             <select class="form-control" name="title">
                                 <option value="">Seçiniz...</option>
@@ -134,7 +172,11 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">Fakülte</label>
+                            <label class="fw-semibold">
+                                <span>Fakülte</span>
+                                <span> / </span>
+                                <span class="opacity-50">Faculty</span>
+                            </label>
 
                             <select class="form-control" name="faculty">
                                 <option value="">Seçiniz...</option>
@@ -146,18 +188,30 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">Bölüm</label>
+                        <label class="fw-semibold">
+                                <span>Bölüm</span>
+                                <span> / </span>
+                                <span class="opacity-50">Department</span>
+                            </label>
                             <input class="form-control" type="text" placeholder="Bölümünüzü girin" name="department">
                         </div>
 
                         <div class="col-12 mt-3 ">
-                            <label class="fw-semibold">Temel Alan</label>
+                        <label class="fw-semibold">
+                                <span>Temel Alan</span>
+                                <span> / </span>
+                                <span class="opacity-50">Basic Field</span>
+                            </label>
                             <input class="form-control" type="text" placeholder="Temel Alanınızı girin"
                                 name="basic_field">
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">Bilimsel Alan</label>
+                        <label class="fw-semibold">
+                                <span>Bilimsel Alan</span>
+                                <span> / </span>
+                                <span class="opacity-50">Science Field</span>
+                            </label>
                             <input class="form-control" type="text" placeholder="Bilimsel Alanınızı girin"
                                 name="scientific_field">
                             <small class="form-text text-muted">*En Yakın Bilim Alanını Yazınız. ÜAK Doçentlik temel
@@ -166,7 +220,11 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="col-12 mt-5">
-                            <label class="fw-semibold">Akademik Faaliyet Türü</label>
+                        <label class="fw-semibold">
+                                <span>Akademik Faaliyet Türü</span>
+                                <span> / </span>
+                                <span class="opacity-50">Academic Activity Type</span>
+                            </label>
                             <select class="form-control" name="academic_activity_type"
                                 onchange="updateActivityTypeOptions()">
                                 <option value="">Seçiniz...</option>
@@ -179,19 +237,31 @@ if (isset($_SESSION['user_id'])) {
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">Faaliyet</label>
+                        <label class="fw-semibold">
+                                <span>Faaliyet</span>
+                                <span> / </span>
+                                <span class="opacity-50">Activity</span>
+                            </label>
                             <select class="form-control" name="activity" id="activityTypeSelect">
                             </select>
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">Eser Adı</label>
+                        <label class="fw-semibold">
+                                <span>Eser Adı</span>
+                                <span> / </span>
+                                <span class="opacity-50">Work Name</span>
+                            </label>
                             <input class="form-control" type="text" name="work_name">
                             </select>
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">Kişi sayısı</label>
+                        <label class="fw-semibold">
+                                <span>Yazar Sayısı</span>
+                                <span> / </span>
+                                <span class="opacity-50">Number of Authors</span>
+                            </label>
                             <select class="form-control" name="persons">
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>">
@@ -204,12 +274,16 @@ if (isset($_SESSION['user_id'])) {
 
 
                         <div class="col-12 mt-3">
-                            <label class="fw-semibold">Dosya Yükleme</label>
+                        <label class="fw-semibold">
+                                <span>Dosya Yükleme</span>
+                                <span> / </span>
+                                <span class="opacity-50">File Upload</span>
+                            </label>
                             <input class="form-control" type="file" name="file_upload" accept="application/pdf" required>
                             <small class="form-text text-muted">Dosya yükleyiniz.</small>
                         </div>
                         <div class="col-12 my-4 text-center">
-                            <input type="submit" class="btn btn-success-2 px-5 fw-semibold ms-3" name="submit_btn">
+                            <input value="Gönder" type="submit" class="btn btn-success-2 px-5 fw-semibold ms-3" name="submit_btn">
                         </div>
 
                         </div>
