@@ -17,13 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         isset($_POST['doi_number']) &&
         isset($_POST['persons'])
         // Ensure all the fields you want to update are included here
-    ) {
+      )  {
         // Database connection details
         $servername = "localhost"; // Replace with your server name if different
         $username = "root"; // Replace with your MySQL username
         $password = ""; // Replace with your MySQL password
         $dbname = "aias"; // Replace with your database name
-
+    
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 scientific_field = '$scientific_field', 
                 academic_activity_type = '$academic_activity_type', 
                 activity = '$activity', 
-                work_name = '$work_name',
+                work_name = '$work_name', 
                 doi_number = '$doi_number',
                 persons = '$persons' 
                 WHERE id = $id";

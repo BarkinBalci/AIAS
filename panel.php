@@ -54,7 +54,7 @@ $result = $conn->query($sql);
     <title>Akademik Teşvik</title>
 
     <link rel="stylesheet" href="css/main.css">
-
+    
     <style>
   .ms-auto {
     margin-left: auto !important;
@@ -98,35 +98,35 @@ $result = $conn->query($sql);
   </div>
 </nav>
 
+<div class="mt-5 container">
 
-    <div class="mt-5 container">
-
-        <?php
-        if ($result->num_rows > 0) {
-            // Output data in a table
-            echo "<table id='example' class='table table-striped' style='width:100%'>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Ünvan</th>
-                <th>Ad</th>
-                <th>Soyad</th>
-                <th>Departman</th>
-                <th>Temel Alan</th>
-                <th>Bilimsel Alan</th>
-                <th>Akademik Faaliyet Türü</th>
-                <th>Faaliyet</th>
-                <th>Eser Adı</th>
-                <th>Doi Numarası</th>
-                <th>Kişi</th>
-                <th>Teşvik Puanı</th>
-                <th>Başvuru Tarihi</th>
-                <th>Dosya</th> 
-            </tr>
-        </thead>";
-            // Output data of each row
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>
+    <?php
+if ($result->num_rows > 0) {
+    // Output data in a table
+    echo "<table id='example' class='table table-striped' style='width:100%'>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ünvan</th>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>Departman</th>
+                    <th>Temel Alan</th>
+                    <th>Bilimsel Alan</th>
+                    <th>Akademik Faaliyet Türü</th>
+                    <th>Faaliyet</th>
+                    <th>Eser Adı</th>
+                    <th>Doi Numarası</th>
+                    <th>Kişi</th>
+                    <th>Teşvik Puanı</th>
+                    <th>Başvuru Tarihi</th>
+                    <th>Dosya</th>
+                    <th>Onay Durum</th>
+                </tr>
+            </thead>";
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
                 <td>" . $row["id"] . "</td>
                 <td>" . $row["title"] . "</td>
                 <td>" . $row["name"] . "</td>
@@ -142,23 +142,31 @@ $result = $conn->query($sql);
                 <td>" . $row["incentive_point"] . "</td>
                 <td>" . $row["formatted_date"] . "</td>
                 <td><a href='" . $row["file_path"] . "' target='_blank' class='btn btn-dark p-2'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-file-earmark-arrow-down' viewBox='0 0 16 16'>
-  <path d='M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z'/>
-  <path d='M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z'/>
-</svg>
-                </a></td> 
-      
-              </tr>";
-            }
-            echo "<tfoot></tfoot>";
-            echo "</table>";
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-file-earmark-arrow-down' viewBox='0 0 16 16'>
+                            <path d='M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z'/>
+                            <path d='M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z'/>
+                        </svg>
+                    </a>
+                </td>
+                <td>";
+
+        if (isset($row["onay_durumu"])) {
+            echo $row["onay_durumu"];
         } else {
-            echo "Başvuru kaydınız bulunmamaktadır!";
+            echo "Beklemede";
         }
 
-        // Close the database connection
-        $conn->close();
-        ?>
+        echo "</td></tr>";
+    }
+
+    echo "</tbody><tfoot></tfoot></table>";
+} else {
+    echo "Başvuru kaydınız bulunmamaktadır!";
+}
+
+// Veritabanı bağlantısını kapat
+$conn->close();
+?>
 
 
 
@@ -189,7 +197,10 @@ $result = $conn->query($sql);
 
                         <label for="surname">Surname:</label>
                         <input type="text" id="surname" class="form-control" required>
-
+                        
+                        <input type="hidden" id="rowId">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" class="form-control">
                         <!-- Add input fields for other columns -->
 
 
@@ -212,9 +223,8 @@ $result = $conn->query($sql);
                         <input type="text" id="work_name" class="form-control">
 
                         <label for="doi_number">Doi Number:</label>
-                        <input type="text" id="doi_number" class="form-control">
-
-
+                        <input type="text" id="doi_number" class="form-control">                        
+                        
                         <label for="persons">Persons:</label>
                         <input type="text" id="persons" class="form-control">
 
@@ -222,9 +232,12 @@ $result = $conn->query($sql);
 
                         <!-- Buttons to update or delete -->
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-primary" id="updateBtn">Update</button>
-                            <button type="button" class="btn btn-danger" id="deleteBtn">Delete</button>
+                            <button type="submit" class="btn btn-primary" id="updateBtn">Güncelle</button>
+                            <button type="button" class="btn btn-danger" id="deleteBtn">Sil</button>
+                            <button type="submit" class="btn btn-success" id="approveBtn">Onayla</button>
+                            <button type="submit" class="btn btn-danger" id="rejectBtn">Reddet</button>
                         </div>
+                        
                     </form>
                 </div>
 
@@ -260,7 +273,7 @@ $result = $conn->query($sql);
                 $('#work_name').val(rowData[9]);
                 $('#doi_number').val(rowData[10]);
                 $('#persons').val(rowData[11]);
-
+                
                 // Show the modal
                 $('#updateModal').modal({
                     "backdrop": "static",
@@ -298,52 +311,93 @@ $result = $conn->query($sql);
             });
         });
 
-        // Function to handle form submission for updating data
-        $('#updateBtn').on('click', function (event) {
-            event.preventDefault(); // Prevent default form submission
-            var rowId = $('#rowId').val();
-            var rowName = $("#name").val();
-            var rowSurname = $("#surname").val();
-            var rowTitle = $("#title").val();
-            var rowDepartment = $("#department").val();
-            var rowBasicField = $("#basic_field").val();
-            var rowScientificField = $("#scientific_field").val();
-            var rowAcademicActivityType = $("#academic_activity_type").val();
-            var rowActivity = $("#activity").val();
-            var rowWorkName = $("#work_name").val();
-            var rowDoiNumber = $("#doi_number").val();
-            var rowPersons = $("#persons").val();
+       // Function to handle form submission for updating data
+$('#updateBtn').on('click', function (event) {
+    event.preventDefault(); // Prevent default form submission
+    var rowId = $('#rowId').val();
+    var rowName = $("#name").val();
+    var rowSurname = $("#surname").val();
+    var rowTitle = $("#title").val();
+    var rowDepartment = $("#department").val();
+    var rowBasicField = $("#basic_field").val();
+    var rowScientificField = $("#scientific_field").val();
+    var rowAcademicActivityType = $("#academic_activity_type").val();
+    var rowActivity = $("#activity").val();
+    var rowWorkName = $("#work_name").val();
+    var rowDoiNumber = $("#doi_number").val();
+    var rowPersons = $("#persons").val();
 
-            $.ajax({
-                url: 'update_row.php', // Replace with your PHP script to handle update
-                method: 'POST',
-                data: {
-                    id: rowId,
-                    name: rowName,
-                    surname: rowSurname,
-                    title: rowTitle,
-                    department: rowDepartment,
-                    basic_field: rowBasicField,
-                    scientific_field: rowScientificField,
-                    academic_activity_type: rowAcademicActivityType,
-                    activity: rowActivity,
-                    work_name: rowWorkName,
-                    doi_number: rowDoiNumber,
-                    persons: rowPersons
-                    // Add more fields as needed
-                },
-                success: function (response) {
-                    // Handle success (e.g., close modal, refresh table)
-                    $('#updateModal').modal('hide'); // Hide the modal after update
-                    setTimeout(function () {
-                        location.reload(); // Reload the page for simplicity; update the table via AJAX too if needed
-                    }, 1000);
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                },
-            });
-        });
+    $.ajax({
+        url: 'update_row.php', // Replace with your PHP script to handle update
+        method: 'POST',
+        data: {
+            id: rowId,
+            name: rowName,
+            surname: rowSurname,
+            title: rowTitle,
+            department: rowDepartment,
+            basic_field: rowBasicField,
+            scientific_field: rowScientificField,
+            academic_activity_type: rowAcademicActivityType,
+            activity: rowActivity,
+            work_name: rowWorkName,
+            doi_number: rowDoiNumber,
+            persons: rowPersons
+            // Add more fields as needed
+        },
+        success: function (response) {
+            // Handle success (e.g., close modal, refresh table)
+            $('#updateModal').modal('hide'); // Hide the modal after update
+            setTimeout(function () {
+                location.reload(); // Reload the page for simplicity; update the table via AJAX too if needed
+            }, 1000);
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        },
+    });
+});
+
+// Function to handle approval
+$('#approveBtn').on('click', function () {
+    var rowId = $('#rowId').val(); // Get row ID from the hidden field
+    $.ajax({
+        url: 'approve_row.php', // Replace with your PHP script to handle approval
+        method: 'POST',
+        data: { id: rowId },
+        success: function (response) {
+            // Refresh or update table after approval
+            $('#updateModal').modal('hide');
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        },
+    });
+});
+
+// Function to handle rejection
+$('#rejectBtn').on('click', function () {
+    var rowId = $('#rowId').val(); // Get row ID from the hidden field
+    $.ajax({
+        url: 'reject_row.php', // Replace with your PHP script to handle rejection
+        method: 'POST',
+        data: { id: rowId },
+        success: function (response) {
+            // Refresh or update table after rejection
+            $('#updateModal').modal('hide');
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        },
+    });
+});
+        
 
     </script>
 </body>

@@ -218,8 +218,10 @@ if ($table_result->num_rows == 0) {
         reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         file_name VARCHAR(100),
         file_path VARCHAR(255),
-        file_size INT(11)
+        file_size INT(11),
+        onay_durum VARCHAR(10) 
     )";
+    
 
     // Execute the query to create table
     if ($conn->query($sql) === TRUE) {
@@ -270,7 +272,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $file_size = $_FILES['file_upload']['size'];
 
                 if ($file_temp != "") {
-                    $upload_dir = '/Applications/XAMPP/xamppfiles/htdocs/aias/files/';
+                    $upload_dir = '/XAMP/htdocs/aias/files/';
                     $project_dir = "/aias/files/";
                     if (move_uploaded_file($file_temp, $upload_dir . $file_name)) {
                         // Get the last inserted ID after the data insertion query
