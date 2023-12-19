@@ -216,9 +216,9 @@ if ($table_result->num_rows == 0) {
         incentive_point DECIMAL(10,2),
         user_id INT(11),
         reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        file_name VARCHAR(100),
-        file_path VARCHAR(255),
-        file_size INT(11),
+        folder_uuid VARCHAR(100),
+        folder_path VARCHAR(255),
+        total_size INT(11),
         onay_durum VARCHAR(10) 
     )";
     
@@ -232,67 +232,76 @@ if ($table_result->num_rows == 0) {
 }
 
 
-// Insert data from POST request into the table
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // session_start();
     if (isset($_SESSION['user_id'])) {
-        $userId = $_SESSION['user_id'];
-        // $userId = $_SESSION['user_id'];
-        $name = $_POST["name"];
-        $surname = $_POST["surname"];
-        $email = $_POST["email"];
-        $title = $_POST["title"];
-        $faculty = $_POST["faculty"];
-        $department = $_POST["department"];
-        $basic_field = $_POST["basic_field"];
-        $scientific_field = $_POST["scientific_field"];
-        $academic_activity_type = $_POST["academic_activity_type"];
-        $activity = $_POST["activity"];
-        $work_name = $_POST["work_name"];
-        $doi_number = $_POST["doi_number"];
-        $persons = $_POST["persons"];
+    $userId = $_SESSION['user_id'];
+    // $userId = $_SESSION['user_id'];
+    $name = $_POST["name"];
+    $surname = $_POST["surname"];
+    $email = $_POST["email"];
+    $title = $_POST["title"];
+    $faculty = $_POST["faculty"];
+    $department = $_POST["department"];
+    $basic_field = $_POST["basic_field"];
+    $scientific_field = $_POST["scientific_field"];
+    $academic_activity_type = $_POST["academic_activity_type"];
+    $activity = $_POST["activity"];
+    $work_name = $_POST["work_name"];
+    $doi_number = $_POST["doi_number"];
+    $persons = $_POST["persons"];
 
         // Katsayısının hesaplanması
-        $coefficient = calculateCofficient($persons);
+    $coefficient = calculateCofficient($persons);
 
         // Teşvik puanı hesaplama
-        $incentive_point = calculateIncentivePoint($academic_activity_type, $activity, $coefficient);
+    $incentive_point = calculateIncentivePoint($academic_activity_type, $activity, $coefficient);
 
-        // SQL query to insert data into the table
-        $insert_query = "INSERT INTO $table_name (name, surname, email, title, faculty, department, basic_field, scientific_field, academic_activity_type, activity, work_name, doi_number, persons, coefficient, user_id, incentive_point ) VALUES ('$name', '$surname', '$email', '$title', '$faculty', '$department', '$basic_field', '$scientific_field', '$academic_activity_type', '$activity', '$work_name', '$doi_number', '$persons', '$coefficient', '$userId', '$incentive_point')";
+    // SQL query to insert data into the table
+    $insert_query = "INSERT INTO $table_name (name, surname, email, title, faculty, department, basic_field, scientific_field, academic_activity_type, activity, work_name, doi_number, persons, coefficient, user_id, incentive_point ) VALUES ('$name', '$surname', '$email', '$title', '$faculty', '$department', '$basic_field', '$scientific_field', '$academic_activity_type', '$activity', '$work_name', '$doi_number', '$persons', '$coefficient', '$userId', '$incentive_point')";
 
-        if ($conn->query($insert_query) === TRUE) {
+    if ($conn->query($insert_query) === TRUE) {
             // echo "Data inserted successfully";
             // Dosya yükleme işlemini yönetmek
-            if (isset($_FILES['file_upload'])) {
+        if (isset($_FILES['file_upload'])) {
+            $file_names = $_FILES['file_upload']['name'];
+            $file_temps = $_FILES['file_upload']['tmp_name'];
+            $file_sizes = $_FILES['file_upload']['size'];
 
+            // Generate a unique ID for the folder
+            $folder_uuid = uniqid('', false);
+            $upload_dir = '/xampp/htdocs/aias/files/' . $folder_uuid . '/';
+            $project_dir = "/aias/files/$folder_uuid/";
 
-                $file_name = $_FILES['file_upload']['name'];
-                $file_temp = $_FILES['file_upload']['tmp_name'];
-                $file_size = $_FILES['file_upload']['size'];
+            // Create the folder
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
 
-                if ($file_temp != "") {
-                    $upload_dir = '/XAMP/htdocs/aias/files/';
-                    $project_dir = "/aias/files/";
-                    if (move_uploaded_file($file_temp, $upload_dir . $file_name)) {
-                        // Get the last inserted ID after the data insertion query
-                        $insert_query = "UPDATE $table_name  SET file_name = '$file_name', file_path = '$project_dir$file_name', file_size = '$file_size' WHERE id = LAST_INSERT_ID()";
-
-                        if ($conn->query($insert_query) === TRUE) {
-                            // echo "Data inserted successfully";
-                            header("Location: user_panel.php");
-                        } else {
-                            echo "Error inserting data: " . $conn->error;
-                        }
+            $total_size = 0;
+            for ($i = 0; $i < count($file_names); $i++) {
+                if ($file_temps[$i] != "") {
+                    if (move_uploaded_file($file_temps[$i], $upload_dir . $file_names[$i])) {
+                        $total_size += $file_sizes[$i];
                     } else {
                         echo "Error uploading file" . print_r(error_get_last(), true);
                     }
                 }
             }
-        } else {
-            echo "Error inserting data: " . $conn->error;
+
+            // Insert folder properties into the database
+            $insert_query = "UPDATE $table_name  SET folder_uuid = '$folder_uuid', folder_path = '$project_dir', total_size = '$total_size' WHERE id = LAST_INSERT_ID()";
+
+            if ($conn->query($insert_query) === TRUE) {
+                header("Location: user_panel.php");
+            } else {
+                echo "Error inserting data: " . $conn->error;
+            }
         }
     } else {
+        echo "Error inserting data: " . $conn->error;
+    }
+} else {
         echo "User ID not found in session.";
     }
 }

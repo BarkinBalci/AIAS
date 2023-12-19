@@ -281,15 +281,13 @@ if (isset($_SESSION['user_id'])) {
                             </select>
                         </div>
 
-
-
                         <div class="col-12 mt-3">
                         <label class="fw-semibold">
                                 <span>Dosya Yükleme</span>
                                 <span> / </span>
                                 <span class="opacity-50">File Upload</span>
                             </label>
-                            <input class="form-control" type="file" name="file_upload" accept="application/pdf" required>
+                            <input class="form-control" type="file" name="file_upload[]" accept="application/pdf" multiple required>
                             <small class="form-text text-muted">Dosya yükleyiniz.</small>
                         </div>
                         <div class="col-12 my-4 text-center">

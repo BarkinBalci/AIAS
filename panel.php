@@ -98,7 +98,7 @@ $result = $conn->query($sql);
   </div>
 </nav>
 
-<div class="mt-5 container">
+<div class="mt-5 container ">
 
     <?php
 if ($result->num_rows > 0) {
@@ -120,7 +120,7 @@ if ($result->num_rows > 0) {
                     <th>Kişi</th>
                     <th>Teşvik Puanı</th>
                     <th>Başvuru Tarihi</th>
-                    <th>Dosya</th>
+                    <th>Klasör</th>
                     <th>Onay Durum</th>
                 </tr>
             </thead>";
@@ -141,10 +141,10 @@ if ($result->num_rows > 0) {
                 <td>" . $row["persons"] . "</td>
                 <td>" . $row["incentive_point"] . "</td>
                 <td>" . $row["formatted_date"] . "</td>
-                <td><a href='" . $row["file_path"] . "' target='_blank' class='btn btn-dark p-2'>
-                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-file-earmark-arrow-down' viewBox='0 0 16 16'>
-                            <path d='M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z'/>
-                            <path d='M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z'/>
+                <td>
+                    <a href='folder_view.php?folder_path=" . $row["folder_path"] . "' target='_blank' class='btn btn-dark p-2'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-folder' viewBox='0 0 16 16'>
+                            <path d='M2 1a1 1 0 0 0-1 1v1.5a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5V2a1 1 0 0 0-1-1H2zm0 2h13v11H2V3zm2 1a1 1 0 0 1 1 1v1a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4zm1 1v1h6V5H5z'/>
                         </svg>
                     </a>
                 </td>
@@ -167,7 +167,6 @@ if ($result->num_rows > 0) {
 // Veritabanı bağlantısını kapat
 $conn->close();
 ?>
-
 
 
     </div>
@@ -228,8 +227,8 @@ $conn->close();
                         <label for="persons">Persons:</label>
                         <input type="text" id="persons" class="form-control">
 
-                        <!-- Add more input fields for other columns -->
-
+                        
+    
                         <!-- Buttons to update or delete -->
                         <div class="mt-3">
                             <button type="submit" class="btn btn-primary" id="updateBtn">Güncelle</button>
