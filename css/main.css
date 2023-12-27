@@ -10,6 +10,10 @@
   }
 }
 
+.container {
+  max-width: 1500px;
+}
+
 .line-scale-pulse-out > div {
   background-color: #3f6ad8;
   width: 4px;

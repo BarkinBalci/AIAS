@@ -1,6 +1,7 @@
 new DataTable('#example', {
   stateSave: true,
-
+  scrollX: true,
+  
   language: {
     info: 'Sayfa _PAGE_ / _PAGES_ gösteriliyor',
     infoEmpty: 'Kayıt bulunamadı',

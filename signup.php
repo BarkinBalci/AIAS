@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
                 </div>
 
                 <div class="text-center mt-4">
-                    <h4 class="fw-semibold opacity-75">Akademik Teşvik Kontrol Sistemi</h4>
+                    <h4 class="fw-semibold opacity-75">Akademik Teşvik Sistemi</h4>
                     <h6 class="fw-semibold opacity-75">Yetkili Kayıt Paneli</h6>
                 </div>
 

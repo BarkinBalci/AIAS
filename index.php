@@ -119,7 +119,6 @@ if (isset($_SESSION['user_id'])) {
                             </select>
                         </div>
 
-
                         <div class="col-12">
                             <div class="row academicInfo">
                                 <div class="col-6 mt-4">

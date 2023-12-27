@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="text-center mt-4">
-                        <h4 class="fw-semibold opacity-75">Akademik Teşvik Kontrol Sistemi</h4>
+                        <h4 class="fw-semibold opacity-75">Akademik Teşvik Sistemi</h4>
                         <h6 class="fw-semibold opacity-75">Yetkili Giriş Paneli</h6>
                     </div>
 
