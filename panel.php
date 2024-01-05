@@ -79,8 +79,10 @@ $result = $conn->query($sql);
         <li class="nav-item">
             <a class="nav-link" href="index.php">Başvuru Oluştur</a>
         </li>
+
 </ul>
       <ul class="navbar-nav ms-auto">
+        
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ayarlar
@@ -90,6 +92,9 @@ $result = $conn->query($sql);
           <a class="dropdown-item" href="activity_settings.php">Faaliyet Ayarları</a>
         </div>
       </li>
+        <li class="nav-item">
+            <a class="nav-link" href="change_password.php">Şifre Değiştir</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="signout.php">Çıkış Yap</a>
         </li>

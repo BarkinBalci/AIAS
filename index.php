@@ -78,6 +78,7 @@ if (isset($_SESSION['user_id'])) {
         </li>
 </ul>
       <ul class="navbar-nav ms-auto">
+        
         <li class="nav-item">
           <a class="nav-link" href="signout.php">Çıkış Yap</a>
         </li>

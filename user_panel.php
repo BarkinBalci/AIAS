@@ -63,6 +63,9 @@ $result = $conn->query($sql);
 </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
+          <a class="nav-link" href="change_password.php">Şifre Değiştir</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="signout.php">Çıkış Yap</a>
         </li>
       </ul>
