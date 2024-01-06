@@ -155,8 +155,8 @@ if ($result->num_rows > 0) {
                 </td>
                 <td>";
 
-        if (isset($row["onay_durumu"])) {
-            echo $row["onay_durumu"];
+        if (isset($row["onay_durum"])) {
+            echo $row["onay_durum"];
         } else {
             echo "Beklemede";
         }
@@ -205,6 +205,8 @@ $conn->close();
                         <input type="hidden" id="rowId">
                         <label for="title">Title:</label>
                         <input type="text" id="title" class="form-control">
+
+                        
                         <!-- Add input fields for other columns -->
 
 
@@ -232,15 +234,21 @@ $conn->close();
                         <label for="persons">Persons:</label>
                         <input type="text" id="persons" class="form-control">
 
+                        <label for="department">Department:</label>
+                        <input type="text" id="department" class="form-control">
+
+                        <label for="basic_field">Basic Field:</label>
+                        <input type="text" id="basic_field" class="form-control">
+
                         
     
                         <!-- Buttons to update or delete -->
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary" id="updateBtn">Güncelle</button>
-                            <button type="button" class="btn btn-danger" id="deleteBtn">Sil</button>
-                            <button type="submit" class="btn btn-success" id="approveBtn">Onayla</button>
-                            <button type="submit" class="btn btn-danger" id="rejectBtn">Reddet</button>
-                        </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary" id="updateBtn">Güncelle</button>
+                        <button type="button" class="btn btn-danger" id="deleteBtn">Sil</button>
+                        <button type="submit" class="btn btn-success" id="approveBtn">Onayla</button>
+                        <button type="submit" class="btn btn-danger" id="rejectBtn">Reddet</button>
+                    </div>
                         
                     </form>
                 </div>
@@ -362,19 +370,16 @@ $('#updateBtn').on('click', function (event) {
     });
 });
 
-// Function to handle approval
 $('#approveBtn').on('click', function () {
-    var rowId = $('#rowId').val(); // Get row ID from the hidden field
+    var rowId = $('#rowId').val(); // Seçili satırın ID'sini alın
     $.ajax({
-        url: 'approve_row.php', // Replace with your PHP script to handle approval
+        url: 'approve_row.php',
         method: 'POST',
         data: { id: rowId },
         success: function (response) {
-            // Refresh or update table after approval
-            $('#updateModal').modal('hide');
-            setTimeout(function () {
-                location.reload();
-            }, 500);
+            console.log(response); // İşlem başarılıysa konsola göster
+            // İşlem başarılı olduğunda gerekli işlemleri yapabilirsiniz, örneğin bir mesaj gösterebilirsiniz.
+            updateContent(); // İçeriği güncellemek için bu fonksiyonu çağırın
         },
         error: function (xhr, status, error) {
             console.error(error);
@@ -382,25 +387,37 @@ $('#approveBtn').on('click', function () {
     });
 });
 
-// Function to handle rejection
 $('#rejectBtn').on('click', function () {
-    var rowId = $('#rowId').val(); // Get row ID from the hidden field
+    var rowId = $('#rowId').val(); // Seçili satırın ID'sini alın
     $.ajax({
-        url: 'reject_row.php', // Replace with your PHP script to handle rejection
+        url: 'reject_row.php',
         method: 'POST',
         data: { id: rowId },
         success: function (response) {
-            // Refresh or update table after rejection
-            $('#updateModal').modal('hide');
-            setTimeout(function () {
-                location.reload();
-            }, 500);
+            console.log(response); // İşlem başarılıysa konsola göster
+            // İşlem başarılı olduğunda gerekli işlemleri yapabilirsiniz, örneğin bir mesaj gösterebilirsiniz.
+            updateContent(); // İçeriği güncellemek için bu fonksiyonu çağırın
         },
         error: function (xhr, status, error) {
             console.error(error);
         },
     });
 });
+// İçeriği güncellemek için AJAX ile veri alın
+function updateContent() {
+    $.ajax({
+        url: 'update_row.php', // Verileri güncelleyecek olan PHP dosyasının adı ve yolu
+        method: 'GET', // GET veya POST isteği olarak ayarlayın, uygun şekilde düzenleyin
+        success: function (data) {
+            // Yeni verilerle içeriği güncelleyin
+            $('#contentDiv').html(data); // Güncellenecek içeriğin bulunduğu elemanın ID'sini seçin
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        },
+    });
+}
+
         
 
     </script>

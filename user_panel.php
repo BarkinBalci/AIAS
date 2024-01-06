@@ -89,6 +89,7 @@ $result = $conn->query($sql);
                 <th>Kişi</th>
                 <th>Teşvik Puanı</th>
                 <th>Başvuru Tarihi</th>
+                <th>Onay Durum</th>
         
             </tr>
         </thead>";
@@ -105,9 +106,23 @@ $result = $conn->query($sql);
                 <td>" . $row["persons"] . "</td>
                 <td>" . $row["incentive_point"] . "</td>
                 <td>" . $row["formatted_date"] . "</td>
-               
-              </tr>";
-            }
+                <td>
+                <a href='folder_view.php?folder_path=" . $row["folder_path"] . "' target='_blank' class='btn btn-dark p-2'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-folder' viewBox='0 0 16 16'>
+                        <path d='M2 1a1 1 0 0 0-1 1v1.5a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5V2a1 1 0 0 0-1-1H2zm0 2h13v11H2V3zm2 1a1 1 0 0 1 1 1v1a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4zm1 1v1h6V5H5z'/>
+                    </svg>
+                </a>
+            </td>
+            <td>";
+
+    if (isset($row["onay_durum"])) {
+        echo $row["onay_durum"];
+    } else {
+        echo "Beklemede";
+    }
+
+    echo "</td></tr>";
+}
             echo "<tfoot></tfoot>";
             echo "</table>";
         } else {

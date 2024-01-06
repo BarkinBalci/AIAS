@@ -1,72 +1,25 @@
 <?php
-function handleFormSubmission()
-{
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $requiredFields = ['id', 'name', 'surname', 'title', 'department', 'basic_field', 'scientific_field', 'academic_activity_type', 'activity', 'work_name', 'persons'];
+// Veritabanı bağlantısı
+require_once "db_connection.php";
 
-        // Gerekli form alanlarının varlığı ve geçerliliği kontrol ediliyor
-        if (areFieldsValid($requiredFields)) {
-            // Veritabanı bağlantı detayları
-            $servername = "localhost"; // Farklı bir sunucu adı varsa değiştirin
-            $username = "root"; // MySQL kullanıcı adınızla değiştirin
-            $password = ""; // MySQL şifrenizle değiştirin
-            $dbname = "aias"; // Veritabanı adınızla değiştirin
+// 'id' parametresini kontrol et ve reddetme işlemini gerçekleştir
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
+    $id = $_POST['id']; // POST isteğinden 'id' değerini al
+    
+    // 'onay_durum' değerini 'Reddedildi' olarak güncelle
+    $updateSql = "UPDATE tesvik SET onay_durum = 'Reddedildi' WHERE id = $id";
 
-            // Bağlantı oluşturuluyor
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Bağlantı kontrol ediliyor
-            if ($conn->connect_error) {
-                die("Bağlantı hatası: " . $conn->connect_error);
-            }
-
-            // Form verileri alınıyor
-            $id = $_POST['id'];
-
-            // 'onay_durumu' sütununu istenen bir değere (örneğin, 'Reddedildi') güncellemek için SQL hazırlanıyor ve çalıştırılıyor
-            $onayDurumu = 'Reddedildi'; // İstenilen değere göre bu değeri değiştirin
-            $sql = "UPDATE tesvik SET onay_durumu = ? WHERE id = ?";
-
-            // Prepared statement oluşturuluyor
-            $stmt = $conn->prepare($sql);
-
-            if ($stmt) {
-                // Değerler parametrelerle bağlanıyor
-                $stmt->bind_param("si", $onayDurumu, $id);
-
-                // Sorgu çalıştırılıyor
-                if ($stmt->execute()) {
-                    echo "Satır başarıyla reddedildi";
-                } else {
-                    echo "Satır reddedilirken hata oluştu: " . $stmt->error;
-                }
-
-                // PreparedStatement kapatılıyor
-                $stmt->close();
-            } else {
-                echo "Hazırlanan sorgu oluşturulamadı";
-            }
-
-            // Veritabanı bağlantısı kapatılıyor
-            $conn->close();
-        } else {
-            echo "Geçersiz form verisi alındı";
-        }
+    if ($conn->query($updateSql) === TRUE) {
+        echo "Reddetme işlemi başarıyla gerçekleştirildi.";
+        // JavaScript ile sayfanın yenilenmesi
+        echo "<script>location.reload();</script>";
     } else {
-        echo "Geçersiz istek metodu";
+        echo "Hata oluştu: " . $conn->error;
     }
+} else {
+    echo "Geçersiz istek veya eksik parametre.";
 }
 
-function areFieldsValid($fields)
-{
-    foreach ($fields as $field) {
-        if (!isset($_POST[$field])) {
-            return false;
-        }
-    }
-    return true;
-}
-
-// Form verilerini işle
-handleFormSubmission();
+// Veritabanı bağlantısını kapat
+$conn->close();
 ?>
